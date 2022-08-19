@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/odpf/kay/cli"
+)
 
 func main() {
-	fmt.Println("Hello, Kay!")
+	if err := cli.New().Execute(); err != nil {
+		fmt.Printf("%+v", err)
+		os.Exit(1)
+	}
 }

@@ -14,18 +14,18 @@ import (
 )
 
 type Client struct {
-	db *sqlx.DB
+	DB *sqlx.DB
 	fs *embed.FS
 }
 
 func (c *Client) Close() error {
-	return c.db.Close()
+	return c.DB.Close()
 }
 
 // Execs is used for executing list of db query
 func (c *Client) Execs(ctx context.Context, queries []string) error {
 	for _, query := range queries {
-		_, err := c.db.ExecContext(ctx, query)
+		_, err := c.DB.ExecContext(ctx, query)
 		if err != nil {
 			return err
 		}
@@ -57,7 +57,7 @@ func (c *Client) Migrate(cfg Config) (err error) {
 }
 
 func (c *Client) RunWithinTx(ctx context.Context, f func(tx *sqlx.Tx) error) error {
-	tx, err := c.db.BeginTxx(ctx, nil)
+	tx, err := c.DB.BeginTxx(ctx, nil)
 	if err != nil {
 		return fmt.Errorf("starting transaction: %w", err)
 	}
@@ -78,7 +78,7 @@ func (c *Client) RunWithinTx(ctx context.Context, f func(tx *sqlx.Tx) error) err
 
 // NewClient initializes database connection
 func NewClient(cfg Config, fs *embed.FS) (*Client, error) {
-	db, err := sqlx.Connect("pgx", cfg.ConnURL().String())
+	db, err := sqlx.Connect("postgres", cfg.ConnURL().String())
 	if err != nil {
 		return nil, fmt.Errorf("error creating and connecting DB: %w", err)
 	}
