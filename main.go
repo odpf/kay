@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/odpf/kay/cli"
+	"github.com/odpf/kay/cmd"
 )
 
 func main() {
-	if err := cli.New().Execute(); err != nil {
+	if err := cmd.New().Execute(); err != nil {
 		fmt.Printf("%+v", err)
 		os.Exit(1)
 	}

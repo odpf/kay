@@ -1,4 +1,4 @@
-package cli
+package cmd
 
 import (
 	"github.com/MakeNowJust/heredoc"
@@ -8,7 +8,7 @@ import (
 
 func New() *cobra.Command {
 	var cmd = &cobra.Command{
-		Use:   "shield <command> <subcommand> [flags]",
+		Use:   "kay <command> <subcommand> [flags]",
 		Short: "Kay is all-in-one tool for managing Apache Kafka clusters with confidence",
 		Long: heredoc.Doc(`
 			Kay is all-in-one tool for managing Apache Kafka clusters with confidence.

@@ -10,6 +10,7 @@ import (
 type Config struct {
 	// configuration version
 	Version int         `yaml:"version"`
+	Log     string      `yaml:"log"`
 	App     AppConfig   `yaml:"app"`
 	DB      pgsx.Config `yaml:"db"`
 }

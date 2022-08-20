@@ -1,9 +1,7 @@
 version: 1
 
 # logging configuration
-log:
-  # debug, info, warning, error, fatal - default 'info'
-  level: debug
+log: debug
 
 app:
   port: 8000
