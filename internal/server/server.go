@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/odpf/kay/config"
-	"github.com/odpf/kay/internal/store/postgres"
 	"github.com/odpf/salt/log"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -19,35 +18,7 @@ func Start(config *config.Config) error {
 
 	grpcServer := grpc.NewServer()
 
-	// init http proxy
-	// timeoutGrpcDialCtx, grpcDialCancel := context.WithTimeout(context.Background(), time.Second*5)
-	// defer grpcDialCancel()
-
-	// gwmux := runtime.NewServeMux(
-	// 	runtime.WithErrorHandler(runtime.DefaultHTTPErrorHandler),
-	// 	runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
-	// 		MarshalOptions: protojson.MarshalOptions{
-	// 			UseProtoNames: true,
-	// 		},
-	// 		UnmarshalOptions: protojson.UnmarshalOptions{
-	// 			DiscardUnknown: true,
-	// 		},
-	// 	}),
-	// )
-
 	address := fmt.Sprintf(":%d", config.App.Port)
-	// grpcConn, err := grpc.DialContext(
-	// 	timeoutGrpcDialCtx,
-	// 	address,
-	// 	grpc.WithInsecure(),
-	// 	grpc.WithDefaultCallOptions(),
-	// )
-	// if err != nil {
-	// 	return err
-	// }
-
-	// runtimeCtx, runtimeCancel := context.WithCancel(context.Background())
-	// defer runtimeCancel()
 
 	baseMux := http.NewServeMux()
 	baseMux.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
@@ -69,14 +40,6 @@ func Start(config *config.Config) error {
 		}
 	}
 
-	db, err := postgres.NewClient(config.DB)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		fmt.Println("closing db connection...")
-		db.Close()
-	}()
 	return nil
 }
 
