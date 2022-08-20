@@ -7,12 +7,12 @@ import (
 )
 
 type Config struct {
-	Host     string
-	Port     int
-	Name     string
-	User     string
-	Password string
-	SSLMode  string
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	Name     string `yaml:"name"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	SSLMode  string `yaml:"sslmode"`
 }
 
 // ConnURL returns the connection URL for the Postgres database.
